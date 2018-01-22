@@ -1,7 +1,7 @@
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.ServiceEventTracker import ServiceEventTracker
-from enigma import fbClass, eRCInput, gMainDC, getDesktop, eSize, eServiceReference, eTimer, iPlayableService
+from enigma import fbClass, eRCInput, gMainDC, getDesktop, eSize, eServiceReference, eTimer, iPlayableService, eDVBVolumecontrol
 from browser import Browser
 from Components.config import config
 import os
@@ -99,16 +99,24 @@ class StalkerTVWindow(Screen):
 		self.doExit()
 
 	def doExit(self):
+		file = open('/proc/stb/vmpeg/0/zorder', 'w')
+		file.write('0')
+		file.close()
+		self.volctrl = eDVBVolumecontrol.getInstance()
+		vol = self.volctrl.getVolume()
+		self.volctrl.setVolume(vol, vol)
 		fbClass.getInstance().unlock()
 		eRCInput.getInstance().unlock()
 		global browserinstance
 		gMainDC.getInstance().setResolution(self.xres, self.yres)
 		getDesktop(0).resize(eSize(self.xres, self.yres))
+		browserinstance.setPosition(0, 0, self.width, self.height)
 		global g_session
 		g_session.nav.playService(self.lastservice)
 		self.close()
 
 	def onExit(self):
+		global browserinstance
 		browserinstance.onMediaUrlChanged.remove(self.onMediaUrlChanged)
 		browserinstance.onStopPlaying.remove(self.onStopPlaying)
 		browserinstance.onExit.remove(self.onExit)
@@ -154,6 +162,7 @@ class StalkerTVWindow(Screen):
 	def mediatimercb(self):
 		self.llen = 0
 		self.ppos = 0
+		global browserinstance
 		if self.getCurrentLength() is not None:
 			self.llen = self.getCurrentLength()
 		if self.getCurrentPosition() is not None:
@@ -166,7 +175,6 @@ class StalkerTVWindow(Screen):
 						browserinstance.sendCommand(1001)
 						self.sendstart = 0
 			return
-		global browserinstance
 		browserinstance.sendCommand(1005, struct.pack('!II', self.pts_to_msec(self.llen), self.pts_to_msec(self.ppos)))
 		if self.sendstart:
 			browserinstance.sendCommand(1001)

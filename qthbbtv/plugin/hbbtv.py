@@ -100,6 +100,9 @@ class HbbTVWindow(Screen):
 		self.close()
 
 	def onExit(self):
+		file = open('/proc/stb/vmpeg/0/zorder', 'w')
+		file.write('0')
+		file.close()
 		fbClass.getInstance().unlock()
 		eRCInput.getInstance().unlock()
 		global browserinstance
