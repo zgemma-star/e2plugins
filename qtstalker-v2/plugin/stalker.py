@@ -75,8 +75,12 @@ class StalkerTVWindow(Screen):
 			iPlayableService.evStart: self.serviceStarted,
 			iPlayableService.evStopped: self.serviceStopped,
 			iPlayableService.evEOF: self.serviceEOF,
-			iPlayableService.evGstreamerPlayStarted: self.serviceStarted
+			iPlayableService.evGstreamerPlayStarted: self.serviceStarted,
+			iPlayableService.evVideoProgressiveChanged: self.serviceProgressiveChanged
 		})
+
+	def serviceProgressiveChanged(self):
+		browserinstance.sendCommand(1003)
 
 	def serviceStarted(self):
 		self.mediastate = 1
@@ -99,9 +103,6 @@ class StalkerTVWindow(Screen):
 		self.doExit()
 
 	def doExit(self):
-		file = open('/proc/stb/vmpeg/0/zorder', 'w')
-		file.write('0')
-		file.close()
 		self.volctrl = eDVBVolumecontrol.getInstance()
 		vol = self.volctrl.getVolume()
 		self.volctrl.setVolume(vol, vol)
