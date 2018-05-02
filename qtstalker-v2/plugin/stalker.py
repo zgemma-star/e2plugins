@@ -4,7 +4,6 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from enigma import fbClass, eRCInput, gMainDC, getDesktop, eSize, eServiceReference, eTimer, iPlayableService, eDVBVolumecontrol
 from browser import Browser
 from Components.config import config
-import os
 import struct
 
 
@@ -16,7 +15,7 @@ class StalkerTVWindow(Screen):
 		<screen name="StalkerTVWindow" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="Stalker Plugin">
 		</screen>
 		"""
-	def __init__(self, session, width = 0, height = 0):
+	def __init__(self, session, left = 0, top = 0, width = 0, height = 0):
 		Screen.__init__(self, session)
 
 		global g_session
@@ -32,9 +31,12 @@ class StalkerTVWindow(Screen):
 		self.count = 0
 		self.ppos = 0
 		self.llen = 0
+		self.left = left
+		self.top = top
 		self.width = width
 		self.height = height
 		self.lastservice = self.session.nav.getCurrentlyPlayingServiceReference()
+		self.session.nav.stopService()
 		self.mediastate = 0
 		self.sendstart = 0;
 		self.sendstarttimer = 0;
@@ -68,7 +70,7 @@ class StalkerTVWindow(Screen):
 		browserinstance.onResumePlaying.append(self.onResumePlaying)
 		browserinstance.onSkip.append(self.onSkip)
 
-		browserinstance.sendUrl(config.misc.stalker.portal.value)
+		browserinstance.sendUrl(config.plugins.Stalker.presets[config.plugins.Stalker.preset.value].portal.value)
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 		{
@@ -89,7 +91,6 @@ class StalkerTVWindow(Screen):
 
 	def serviceEOF(self):
 		self.serviceStopped()
-		browserinstance.sendCommand(1002)
 
 	def serviceStopped(self):
 		if self.mediastate == 1:
@@ -111,7 +112,10 @@ class StalkerTVWindow(Screen):
 		global browserinstance
 		gMainDC.getInstance().setResolution(self.xres, self.yres)
 		getDesktop(0).resize(eSize(self.xres, self.yres))
-		browserinstance.setPosition(0, 0, self.width, self.height)
+		open("/proc/stb/fb/dst_left", "w").write(self.left)
+		open("/proc/stb/fb/dst_width", "w").write(self.width)
+		open("/proc/stb/fb/dst_top", "w").write(self.top)
+		open("/proc/stb/fb/dst_height", "w").write(self.height)
 		global g_session
 		g_session.nav.playService(self.lastservice)
 		self.close()
