@@ -17,7 +17,7 @@ import datetime
 
 config.plugins.Stalker = ConfigSubsection()
 config.plugins.Stalker.ntpurl = ConfigText(default = '')
-
+config.plugins.Stalker.stalkermac = ConfigYesNo(default = True)
 config.plugins.Stalker.autostart = ConfigYesNo(default = False)
 config.plugins.Stalker.preset = ConfigInteger(default = 0)
 config.plugins.Stalker.presets = ConfigSubList()
@@ -49,14 +49,11 @@ class StalkerEdit(Screen, ConfigListScreen):
 		Screen.__init__(self, self.session)
 
 		self.list = []
-		ConfigListScreen.__init__(self, self.list, session = self.session)
+		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
 
 		self.loadPortals()
-		addrs = netifaces.ifaddresses('eth0')
-		if_mac = "00:1a:79" + addrs[netifaces.AF_LINK][0]['addr'][8:]
 		self["mac"] = StaticText()
-		self["mac"].setText(_("MAC: ") + if_mac)
-
+		self.setMac()
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
 		self["key_blue"] = StaticText("")
@@ -94,6 +91,17 @@ class StalkerEdit(Screen, ConfigListScreen):
 		if self.configfound:
 			self.session.openWithCallback(self.confirmationConfig, MessageBox, _("Install Stalker config?"))
 
+	def setMac(self):
+		addrs = netifaces.ifaddresses('eth0')
+		if config.plugins.Stalker.stalkermac.value:
+			if_mac = "00:1a:79" + addrs[netifaces.AF_LINK][0]['addr'][8:]
+		else:
+			if_mac = addrs[netifaces.AF_LINK][0]['addr']
+		self["mac"].setText(_("MAC: ") + if_mac)
+
+	def changedEntry(self):
+		if self["config"].getCurrent()[1] == config.plugins.Stalker.stalkermac:
+			self.setMac()
 
 	def confirmationConfig(self, result):
 		if result:
@@ -122,6 +130,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 			else:
 				self.list.append(getConfigListEntry(_("Portal url") + (" %d" % (x + 1)), self.name[x]))
 		self.list.append(getConfigListEntry(_("Start Stalker with enigma2 (Autostart)"), config.plugins.Stalker.autostart))
+		self.list.append(getConfigListEntry(_("Use stalker mac"), config.plugins.Stalker.stalkermac))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 
@@ -132,6 +141,9 @@ class StalkerEdit(Screen, ConfigListScreen):
 	def confirmationResult(self, result):
 		if result:
 			config.plugins.Stalker.preset.value = self["config"].getCurrentIndex()
+			for x in range(NUMBER_OF_PRESETS):
+				config.plugins.Stalker.presets[x].portal.value = self.name[x].value
+				config.plugins.Stalker.presets[x].save()
 			config.plugins.Stalker.save()
 			self.loadPortals()
 

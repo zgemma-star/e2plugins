@@ -70,6 +70,8 @@ class StalkerTVWindow(Screen):
 		browserinstance.onResumePlaying.append(self.onResumePlaying)
 		browserinstance.onSkip.append(self.onSkip)
 
+		if config.plugins.Stalker.stalkermac.value is False:
+			browserinstance.sendCommand(1200)
 		browserinstance.sendUrl(config.plugins.Stalker.presets[config.plugins.Stalker.preset.value].portal.value)
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
