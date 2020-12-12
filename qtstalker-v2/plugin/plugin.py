@@ -97,7 +97,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 			if_mac = "00:1a:79" + addrs[netifaces.AF_LINK][0]['addr'][8:]
 		else:
 			if_mac = addrs[netifaces.AF_LINK][0]['addr']
-		self["mac"].setText(_("MAC: ") + if_mac)
+		self["mac"].setText(_("MAC: ") + str(if_mac))
 
 	def changedEntry(self):
 		if self["config"].getCurrent()[1] == config.plugins.Stalker.stalkermac:
