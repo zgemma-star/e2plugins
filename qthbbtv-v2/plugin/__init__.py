@@ -1,9 +1,11 @@
 from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-import os,gettext
+import os
+import gettext
 
 PluginLanguageDomain = "QtHbbtv"
 PluginLanguagePath = "Extensions/QtHbbtv/locale"
+
 
 def localeInit():
 	lang = language.getLanguage()[:2]
@@ -12,11 +14,13 @@ def localeInit():
 	gettext.textdomain("enigma2")
 	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
 
+
 def _(txt):
 	t = gettext.dgettext(PluginLanguageDomain, txt)
 	if t == txt:
 		t = gettext.gettext(txt)
 	return t
+
 
 localeInit()
 language.addCallback(localeInit)

@@ -6,7 +6,7 @@ import datasocket
 
 
 class Browser:
-	def __init__(self, urlcallback = None):
+	def __init__(self, urlcallback=None):
 		self.onUrlChanged = []
 		self.onUrlInfoChanged = []
 		self.onMediaUrlChanged = []
@@ -55,7 +55,7 @@ class Browser:
 				x()
 		elif cmd == 1005:
 			x, y, w, h = struct.unpack('!IIII', data)
-			self.setPosition(x, y, w, h,1)
+			self.setPosition(x, y, w, h, 1)
 		elif cmd == 1006:
 			for x in self.onSkip:
 				x(struct.unpack('!I', data))
@@ -71,7 +71,7 @@ class Browser:
 		for x in self.onExit:
 			x()
 
-	def sendCommand(self, cmd, data = ''):
+	def sendCommand(self, cmd, data=''):
 		if self.commandserver is not None:
 			self.commandserver.sendCommand(cmd, data)
 
@@ -94,7 +94,7 @@ class Browser:
 	def StopMediaPlayback(self):
 		self.sendCommand(5)
 
-	def setPosition(self, dst_left, dst_top, dst_width, dst_height,mode=0):
+	def setPosition(self, dst_left, dst_top, dst_width, dst_height, mode=0):
 		width = 1280
 		height = 720
 		if width == -1:
