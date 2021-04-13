@@ -111,7 +111,7 @@ class HbbTVWindow(Screen):
 		browserinstance.onPausePlaying.remove(self.onPausePlaying)
 		browserinstance.onResumePlaying.remove(self.onResumePlaying)
 		browserinstance.onSkip.remove(self.onSkip)
-		browserinstance.setPosition(0, 0, self.width, self.height,0)
+		browserinstance.setPosition(0, 0, self.width, self.height, 0)
 		self.mediatimer.stop()
 		global g_session
 		g_session.nav.playService(self.lastservice)

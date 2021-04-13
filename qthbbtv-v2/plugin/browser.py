@@ -55,7 +55,7 @@ class Browser:
 				x()
 		elif cmd == 1005:
 			x, y, w, h = struct.unpack('!IIII', data)
-			self.setPosition(x, y, w, h,1)
+			self.setPosition(x, y, w, h, 1)
 		elif cmd == 1006:
 			for x in self.onSkip:
 				x(struct.unpack('!I', data))
@@ -94,7 +94,7 @@ class Browser:
 	def StopMediaPlayback(self):
 		self.sendCommand(5)
 
-	def setPosition(self, dst_left, dst_top, dst_width, dst_height,mode=0):
+	def setPosition(self, dst_left, dst_top, dst_width, dst_height, mode=0):
 		width = 1280
 		height = 720
 		if width == -1:
