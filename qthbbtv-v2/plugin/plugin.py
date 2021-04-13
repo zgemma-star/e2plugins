@@ -20,7 +20,11 @@ from Screens.InfoBar import InfoBar
 from Screens.InfoBarGenerics import InfoBarAudioSelection, InfoBarSubtitleSupport, InfoBarTeletextPlugin, InfoBarRedButton
 from Screens.ChannelSelection import service_types_tv
 from Screens.LocationBox import MovieLocationBox
-import re, os, sys, socket, time
+import re
+import os
+import sys
+import socket
+import time
 from Tools.Directories import fileExists, copyfile, pathExists, createDir
 from Components.ServicePosition import ServicePosition
 from Components.VolumeControl import VolumeControl
