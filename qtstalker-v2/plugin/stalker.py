@@ -38,8 +38,8 @@ class StalkerTVWindow(Screen):
 		self.lastservice = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.session.nav.stopService()
 		self.mediastate = 0
-		self.sendstart = 0;
-		self.sendstarttimer = 0;
+		self.sendstart = 0
+		self.sendstarttimer = 0
 
 		fbClass.getInstance().lock()
 		eRCInput.getInstance().lock()
