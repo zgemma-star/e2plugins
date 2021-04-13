@@ -17,7 +17,7 @@ class HbbTVWindow(Screen):
 		<screen name="HbbTVWindow" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="HbbTV Plugin">
 		</screen>
 		"""
-	def __init__(self, session, url = None, pmt = 0, tsid = 0, onid = 0, ssid = 0, width = 0, height = 0, ait = None):
+	def __init__(self, session, url=None, pmt=0, tsid=0, onid=0, ssid=0, width=0, height=0, ait=None):
 		Screen.__init__(self, session)
 
 		global g_session
@@ -74,8 +74,7 @@ class HbbTVWindow(Screen):
 		browserinstance.sendUrl(self._url)
 		browserinstance.showBrowser()
 
-		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
-		{
+		self.__event_tracker = ServiceEventTracker(screen=self, eventmap={
 			iPlayableService.evStart: self.serviceStarted,
 			iPlayableService.evStopped: self.serviceStopped,
 			iPlayableService.evEOF: self.serviceEOF,

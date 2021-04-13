@@ -6,7 +6,7 @@ import datasocket
 
 
 class Browser:
-	def __init__(self, urlcallback = None):
+	def __init__(self, urlcallback=None):
 		self.onUrlChanged = []
 		self.onUrlInfoChanged = []
 		self.onMediaUrlChanged = []
@@ -71,7 +71,7 @@ class Browser:
 		for x in self.onExit:
 			x()
 
-	def sendCommand(self, cmd, data = ''):
+	def sendCommand(self, cmd, data=''):
 		if self.commandserver is not None:
 			self.commandserver.sendCommand(cmd, data)
 

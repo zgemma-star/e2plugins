@@ -67,7 +67,7 @@ class Browser:
 		for x in self.onExit:
 			x()
 
-	def sendCommand(self, cmd, data = ''):
+	def sendCommand(self, cmd, data=''):
 		if self.commandserver is not None:
 			self.commandserver.sendCommand(cmd, data)
 

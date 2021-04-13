@@ -62,7 +62,7 @@ class CommandServer:
 		for client in browserclients:
 			client.transport.loseConnection()
 
-	def sendCommand(self, cmd, data = ''):
+	def sendCommand(self, cmd, data=''):
 		global browserclients
 		for client in browserclients:
 			client.transport.write(struct.pack('!III', client.magic, cmd, len(data)))
