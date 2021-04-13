@@ -74,7 +74,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 
 	def setupCallback(self):
 		self.setupTimer.stop()
-		parts = [(r.tabbedDescription(), r.mountpoint, self.session) for r in harddiskmanager.getMountedPartitions(onlyhotplug=False) if os.access(r.mountpoint, os.F_OK|os.R_OK)]
+		parts = [(r.tabbedDescription(), r.mountpoint, self.session) for r in harddiskmanager.getMountedPartitions(onlyhotplug=False) if os.access(r.mountpoint, os.F_OK | os.R_OK)]
 		for p in parts:
 			if p[1] == '/':
 				continue
