@@ -12,11 +12,13 @@ import struct
 browserinstance = None
 g_session = None
 
+
 class HbbTVWindow(Screen):
 	skin = """
 		<screen name="HbbTVWindow" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="HbbTV Plugin">
 		</screen>
 		"""
+
 	def __init__(self, session, url=None, pmt=0, tsid=0, onid=0, ssid=0, width=0, height=0, ait=None):
 		Screen.__init__(self, session)
 

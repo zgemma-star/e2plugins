@@ -33,7 +33,6 @@ import urllib2
 from hbbtv import HbbTVWindow
 
 
-
 class HBBTVParser(Screen):
 
 	def __init__(self, session):
@@ -73,10 +72,12 @@ class HBBTVParser(Screen):
 			return
 		self.session.open(HbbTVWindow, self.openUrl, pmt, tsid, onid, ssid, width, height, ait)
 
+
 def autostart(reason, **kwargs):
 	global globalinstance
 	if 'session' in kwargs:
 		HBBTVParser(kwargs['session'])
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart)

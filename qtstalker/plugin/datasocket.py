@@ -6,6 +6,7 @@ browserclients = []
 onCommandReceived = []
 onBrowserClosed = []
 
+
 class ClientConnection(Protocol):
 	magic = 987654321
 	data = ''
@@ -45,6 +46,7 @@ class ClientConnection(Protocol):
 			global onBrowserClosed
 			for x in onBrowserClosed:
 				x()
+
 
 class CommandServer:
 	def __init__(self):

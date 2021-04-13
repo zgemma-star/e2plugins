@@ -10,11 +10,13 @@ import struct
 browserinstance = None
 g_session = None
 
+
 class StalkerTVWindow(Screen):
 	skin = """
 		<screen name="StalkerTVWindow" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="Stalker Plugin">
 		</screen>
 		"""
+
 	def __init__(self, session, left=0, top=0, width=0, height=0):
 		Screen.__init__(self, session)
 

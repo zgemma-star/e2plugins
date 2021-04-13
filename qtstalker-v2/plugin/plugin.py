@@ -154,8 +154,10 @@ class StalkerEdit(Screen, ConfigListScreen):
 		config.plugins.Stalker.save()
 		self.close()
 
+
 def setup(session, **kwargs):
 	session.open(StalkerEdit)
+
 
 def autostart(session, **kwargs):
 	global g_timerinstance
@@ -164,6 +166,7 @@ def autostart(session, **kwargs):
 	g_timerinstance = eTimer()
 	g_timerinstance.callback.append(timerCallback)
 	g_timerinstance.start(1000)
+
 
 def timerCallback():
 	global g_timerinstance
@@ -183,6 +186,7 @@ def timerCallback():
 
 	g_session.open(StalkerTVWindow, left, top, width, height)
 
+
 def main(session, **kwargs):
 	left = open("/proc/stb/fb/dst_left", "r").read()
 	width = open("/proc/stb/fb/dst_width", "r").read()
@@ -197,6 +201,7 @@ def main(session, **kwargs):
 			container.execute("ntpd -p %s -q" % (config.plugins.Stalker.ntpurl.value))
 
 	session.open(StalkerTVWindow, left, top, width, height)
+
 
 def Plugins(**kwargs):
 	menus = []
