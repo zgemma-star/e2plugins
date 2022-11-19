@@ -1,13 +1,14 @@
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.ServiceEventTracker import ServiceEventTracker
 from enigma import eTimer, iPlayableService
 import os
 from enigma import fbClass, eRCInput
-from browser import Browser
+from .browser import Browser
 from enigma import fbClass, eRCInput, eServiceReference
 import struct
-
+import six
 
 browserinstance = None
 g_session = None
@@ -112,14 +113,14 @@ class HbbTVWindow(Screen):
 		browserinstance.onPausePlaying.remove(self.onPausePlaying)
 		browserinstance.onResumePlaying.remove(self.onResumePlaying)
 		browserinstance.onSkip.remove(self.onSkip)
-		browserinstance.setPosition(0, 0, self.width, self.height,0)
+		browserinstance.setPosition(0, 0, self.width, self.height, 0)
 		self.mediatimer.stop()
 		global g_session
 		g_session.nav.playService(self.lastservice)
 		self.close()
 
 	def onMediaUrlChanged(self, url):
-		myreference = eServiceReference(4097, 0, url)
+		myreference = eServiceReference(4097, 0, six.ensure_str(url))
 		global g_session
 		g_session.nav.playService(myreference)
 		self.mediastate = 0
@@ -171,7 +172,7 @@ class HbbTVWindow(Screen):
 		r = seek.getPlayPosition()
 		if r[0]:
 			return
-		return long(r[1])
+		return int(r[1])
 
 	def getCurrentLength(self):
 		seek = self.getSeek()
@@ -180,7 +181,7 @@ class HbbTVWindow(Screen):
 		r = seek.getLength()
 		if r[0]:
 			return
-		return long(r[1])
+		return int(r[1])
 
 	def getSeek(self):
 		global g_session

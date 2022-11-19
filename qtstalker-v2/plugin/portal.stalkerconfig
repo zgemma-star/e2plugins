@@ -1,0 +1,4 @@
+portal 0 http://www.test.nl
+portal 1 http://www.test2.nl
+ntp testntpserver.testserver
+

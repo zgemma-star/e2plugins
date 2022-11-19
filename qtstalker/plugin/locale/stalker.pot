@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: stalker\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: "
+"Language-Team: openATV"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "Stalker"
+msgstr ""
+
+msgid "Stalker Setup"
+msgstr ""
+
+msgid "Portal URL"
+msgstr ""
+
+msgid "Show Stalker in Extensions"
+msgstr ""
+
+msgid "Show Stalker in Mainmenu"
+msgstr ""
+
+msgid "Start Stalker with enigma2 (Autostart)"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Load Settings"
+msgstr ""
+
+msgid "Set this portal as default?"
+msgstr ""
+
+msgid "Install Stalker config?"
+msgstr ""
+
+msgid "Enable Stalker ministra support with unigue boxkey"
+msgstr ""

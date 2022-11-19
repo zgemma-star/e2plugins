@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import struct
 import os
 from twisted.internet.protocol import ServerFactory, Protocol
@@ -8,7 +9,7 @@ onBrowserClosed = []
 
 class ClientConnection(Protocol):
 	magic = 987654321
-	data = ''
+	data = b''
 	headerformat = '!III'
 	headersize = struct.calcsize(headerformat)
 	datasize = 0

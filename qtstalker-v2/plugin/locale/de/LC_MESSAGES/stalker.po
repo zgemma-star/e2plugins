@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: stalker\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Language-Team: openATVMIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Language: de\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Install Stalker config?"
+msgstr "Installieren der Stalker Konfiguration?"
+
+msgid "Load Settings"
+msgstr "Lade Konfig"
+
+msgid "Portal URL"
+msgstr "Portal Seite"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Set this portal as default?"
+msgstr "Festlegen als standard?"
+
+msgid "Show Stalker in Extensions"
+msgstr "Zeige Stalker in Erweiterungen"
+
+msgid "Show Stalker in Mainmenu"
+msgstr "Zeige Stalker im Hauptmenü"
+
+msgid "Stalker"
+msgstr "Stalker"
+
+msgid "Stalker Setup"
+msgstr "Stalker Einstellungen"
+
+msgid "Start Stalker with enigma2 (Autostart)"
+msgstr "Starte Stalker mit enigma2 (Autostart)"
+
+msgid "Enable Stalker ministra support with unigue boxkey"
+msgstr "Aktiviere Stalker ministra support mit eindeutigen Gerätekey"

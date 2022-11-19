@@ -1,11 +1,14 @@
-from Screens.Screen import Screen
-from Components.ActionMap import ActionMap
-from Components.ServiceEventTracker import ServiceEventTracker
-from enigma import fbClass, eRCInput, gMainDC, getDesktop, eSize, eServiceReference, eTimer, iPlayableService, eDVBVolumecontrol
-from browser import Browser
-from Components.config import config
+from __future__ import absolute_import
 import struct
 
+from enigma import fbClass, eRCInput, gMainDC, getDesktop, eSize, eServiceReference, eTimer, iPlayableService, eDVBVolumecontrol
+
+from Components.ActionMap import ActionMap
+from Components.config import config
+from Components.ServiceEventTracker import ServiceEventTracker
+from Screens.Screen import Screen
+
+from .browser import Browser
 
 browserinstance = None
 g_session = None
@@ -134,7 +137,10 @@ class StalkerTVWindow(Screen):
 		self.doExit()
 
 	def onMediaUrlChanged(self, url):
-		myreference = eServiceReference(4097, 0, url)
+		urls = url.decode("utf-8", "ignore")
+		print("[Stalker - onMediaUrlChanged] url is: %s" % urls) 
+		myreference = eServiceReference(4097, 0, urls)
+		print("[Stalker - onMediaUrlChanged] myreference is: %s" % myreference) 
 		global g_session
 		g_session.nav.playService(myreference)
 		self.mediastate = 0
@@ -197,7 +203,7 @@ class StalkerTVWindow(Screen):
 		r = seek.getPlayPosition()
 		if r[0]:
 			return
-		return long(r[1])
+		return r[1]
 
 	def getCurrentLength(self):
 		seek = self.getSeek()
@@ -206,7 +212,7 @@ class StalkerTVWindow(Screen):
 		r = seek.getLength()
 		if r[0]:
 			return
-		return long(r[1])
+		return r[1]
 
 	def getSeek(self):
 		global g_session

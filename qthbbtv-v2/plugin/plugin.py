@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 from Screens.Screen import Screen
@@ -24,10 +26,8 @@ import re, os, sys, socket, time
 from Tools.Directories import fileExists, copyfile, pathExists, createDir
 from Components.ServicePosition import ServicePosition
 from Components.VolumeControl import VolumeControl
-import urllib
-import urllib2
-from hbbtv import HbbTVWindow
-
+from .hbbtv import HbbTVWindow
+from six.moves import urllib
 
 
 class HBBTVParser(Screen):
@@ -58,8 +58,8 @@ class HBBTVParser(Screen):
 		onid = info and info.getInfo(iServiceInformation.sONID) or -1
 		ssid = info and info.getInfo(iServiceInformation.sSID) or -1
 
-		print 'URL %s' % (startUrl)
-		print 'PMT %d TSID %d ONID %d SSID %d' % (pmt, tsid, onid, ssid)
+		print('URL %s' % (startUrl))
+		print('PMT %d TSID %d ONID %d SSID %d' % (pmt, tsid, onid, ssid))
 
 		ait = info.getAITApplications()
 
