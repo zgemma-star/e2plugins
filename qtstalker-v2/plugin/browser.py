@@ -30,7 +30,7 @@ class Browser:
 			datasocket.onCommandReceived.append(self.onCommandReceived)
 			datasocket.onBrowserClosed.append(self.onBrowserClosed)
 			container = eConsoleAppContainer()
-			container.execute("export QT_QPA_FONTDIR=/usr/share/fonts QT_QPA_PLATFORM=linuxfb:fb=/dev/fb/0; /usr/bin/stalker")
+			container.execute("export QT_QPA_FB_HIDECURSOR=1 QT_QPA_FONTDIR=/usr/share/fonts QT_QPA_PLATFORM=linuxfb:fb=/dev/fb/0; /usr/bin/stalker")
 
 	def stop(self):
 		if self.commandserver:
@@ -53,7 +53,7 @@ class Browser:
 				x()
 		elif cmd == 1005:
 			for x in self.onSkip:
-				x(struct.unpack("!I", data).encode())
+				x(struct.unpack("!I", data))
 		elif cmd == 1100:
 			VolumeControl.instance and VolumeControl.instance.volUp()
 		elif cmd == 1101:
