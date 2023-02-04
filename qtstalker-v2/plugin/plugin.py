@@ -16,15 +16,15 @@ import datetime
 
 
 config.plugins.Stalker = ConfigSubsection()
-config.plugins.Stalker.ntpurl = ConfigText(default = '')
-config.plugins.Stalker.stalkermac = ConfigYesNo(default = True)
-config.plugins.Stalker.autostart = ConfigYesNo(default = False)
-config.plugins.Stalker.preset = ConfigInteger(default = 0)
+config.plugins.Stalker.ntpurl = ConfigText(default='')
+config.plugins.Stalker.stalkermac = ConfigYesNo(default=True)
+config.plugins.Stalker.autostart = ConfigYesNo(default=False)
+config.plugins.Stalker.preset = ConfigInteger(default=0)
 config.plugins.Stalker.presets = ConfigSubList()
 NUMBER_OF_PRESETS = 6
 for x in range(NUMBER_OF_PRESETS):
 	preset = ConfigSubsection()
-	preset.portal = ConfigText(default = 'http://')
+	preset.portal = ConfigText(default='http://')
 	config.plugins.Stalker.presets.append(preset)
 
 
@@ -49,7 +49,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 		Screen.__init__(self, self.session)
 
 		self.list = []
-		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.changedEntry)
 
 		self.loadPortals()
 		self["mac"] = StaticText()
@@ -74,7 +74,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 
 	def setupCallback(self):
 		self.setupTimer.stop()
-		parts = [ (r.tabbedDescription(), r.mountpoint, self.session) for r in harddiskmanager.getMountedPartitions(onlyhotplug = False) if os.access(r.mountpoint, os.F_OK|os.R_OK) ]
+		parts = [(r.tabbedDescription(), r.mountpoint, self.session) for r in harddiskmanager.getMountedPartitions(onlyhotplug=False) if os.access(r.mountpoint, os.F_OK | os.R_OK)]
 		for p in parts:
 			if p[1] == '/':
 				continue
@@ -124,7 +124,7 @@ class StalkerEdit(Screen, ConfigListScreen):
 		self.list = []
 		self.name = []
 		for x in range(NUMBER_OF_PRESETS):
-			self.name.append(ConfigText(default = config.plugins.Stalker.presets[x].portal.value, fixed_size = False))
+			self.name.append(ConfigText(default=config.plugins.Stalker.presets[x].portal.value, fixed_size=False))
 			if config.plugins.Stalker.preset.value == x:
 				self.list.append(getConfigListEntry(">> " + _("Portal url") + (" %d" % (x + 1)), self.name[x]))
 			else:
@@ -154,8 +154,10 @@ class StalkerEdit(Screen, ConfigListScreen):
 		config.plugins.Stalker.save()
 		self.close()
 
+
 def setup(session, **kwargs):
 	session.open(StalkerEdit)
+
 
 def autostart(session, **kwargs):
 	global g_timerinstance
@@ -164,6 +166,7 @@ def autostart(session, **kwargs):
 	g_timerinstance = eTimer()
 	g_timerinstance.callback.append(timerCallback)
 	g_timerinstance.start(1000)
+
 
 def timerCallback():
 	global g_timerinstance
@@ -183,6 +186,7 @@ def timerCallback():
 
 	g_session.open(StalkerTVWindow, left, top, width, height)
 
+
 def main(session, **kwargs):
 	left = open("/proc/stb/fb/dst_left", "r").read()
 	width = open("/proc/stb/fb/dst_width", "r").read()
@@ -197,6 +201,7 @@ def main(session, **kwargs):
 			container.execute("ntpd -p %s -q" % (config.plugins.Stalker.ntpurl.value))
 
 	session.open(StalkerTVWindow, left, top, width, height)
+
 
 def Plugins(**kwargs):
 	menus = []
