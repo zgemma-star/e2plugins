@@ -22,10 +22,11 @@ from .stalker import StalkerTVWindow
 
 config.plugins.Stalker = ConfigSubsection()
 config.plugins.Stalker.ntpurl = ConfigText(default = "")
-config.plugins.Stalker.stalkermac = ConfigYesNo(default = True)
+config.plugins.Stalker.stalkermac = ConfigYesNo(default = False)
 config.plugins.Stalker.showinextensions = ConfigYesNo(default = True)
 config.plugins.Stalker.showinmenu = ConfigYesNo(default = False)
 config.plugins.Stalker.autostart = ConfigYesNo(default = False)
+config.plugins.Stalker.portalv2 = ConfigYesNo(default = False)
 config.plugins.Stalker.preset = ConfigInteger(default = 0)
 config.plugins.Stalker.presets = ConfigSubList()
 NUMBER_OF_PRESETS = 6
@@ -140,9 +141,10 @@ class StalkerEdit(Screen, ConfigListScreen):
 			else:
 				self.list.append(getConfigListEntry(_("Portal URL") + (" %d" % (x + 1)), self.name[x]))
 		self.list.append(getConfigListEntry(_("Start Stalker with enigma2 (Autostart)"), config.plugins.Stalker.autostart))
-		self.list.append(getConfigListEntry(_("Use stalker mac"), config.plugins.Stalker.stalkermac))
 		self.list.append(getConfigListEntry(_("Show Stalker in Extensions"), config.plugins.Stalker.showinextensions))
 		self.list.append(getConfigListEntry(_("Show Stalker in Mainmenu"), config.plugins.Stalker.showinmenu))
+		self.list.append(getConfigListEntry(_("Use stalker mac"), config.plugins.Stalker.stalkermac))
+		self.list.append(getConfigListEntry(_("New gen portal"), config.plugins.Stalker.portalv2))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 
