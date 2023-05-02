@@ -4,7 +4,6 @@ from enigma import eConsoleAppContainer, getDesktop
 from Components.VolumeControl import VolumeControl
 import datasocket
 
-
 class Browser:
 	def __init__(self):
 		self.onUrlChanged = []
@@ -15,20 +14,26 @@ class Browser:
 		self.onPausePlaying = []
 		self.onResumePlaying = []
 		self.onSkip = []
+		self.onGetPids = []
+		self.onSetAudioPid = []
 		self.commandserver = None
+		self.urlsend = False
 
 	def connectedClients(self):
 		return self.commandserver.connectedClients()
 
-	def start(self):
+	def start(self, portalv2):
 		if not self.commandserver:
 			size_w = getDesktop(0).size().width()
 			size_h = getDesktop(0).size().height()
 			self.commandserver = datasocket.CommandServer()
 			datasocket.onCommandReceived.append(self.onCommandReceived)
 			datasocket.onBrowserClosed.append(self.onBrowserClosed)
+			arg = ""
+			if portalv2:
+				arg = " v2"
 			container = eConsoleAppContainer()
-			container.execute("export QT_QPA_FB_HIDECURSOR=1 QT_QPA_FONTDIR=/usr/share/fonts QT_QPA_PLATFORM=linuxfb:fb=/dev/fb/0; /usr/bin/stalker")
+			container.execute("export QT_QPA_FB_HIDECURSOR=1 QT_QPA_FONTDIR=/usr/share/fonts QT_QPA_PLATFORM=linuxfb:fb=/dev/fb/0; /usr/bin/stalker" + arg)
 
 	def stop(self):
 		if self.commandserver:
@@ -51,7 +56,13 @@ class Browser:
 				x()
 		elif cmd == 1005:
 			for x in self.onSkip:
-				x(struct.unpack('!I', data))
+				x(struct.unpack("!I", data))
+		elif cmd == 1006:
+			for x in self.onGetPids:
+				x()
+		elif cmd == 1007:
+			for x in self.onSetAudioPid:
+				x(struct.unpack("!I", data))
 		elif cmd == 1100:
 			VolumeControl.instance and VolumeControl.instance.volUp()
 		elif cmd == 1101:
@@ -63,6 +74,7 @@ class Browser:
 				x()
 
 	def onBrowserClosed(self):
+		self.urlsend = False
 		self.commandserver = None
 		for x in self.onExit:
 			x()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import struct
 import os
 from twisted.internet.protocol import ServerFactory, Protocol
@@ -8,8 +9,8 @@ onBrowserClosed = []
 
 class ClientConnection(Protocol):
 	magic = 987654321
-	data = ''
-	headerformat = '!III'
+	data = ""
+	headerformat = "!III"
 	headersize = struct.calcsize(headerformat)
 	datasize = 0
 	cmd = 0
@@ -22,7 +23,7 @@ class ClientConnection(Protocol):
 					(magic, self.cmd, self.datasize) = struct.unpack(self.headerformat, self.data[:self.headersize])
 					self.data = self.data[self.headersize:]
 					if magic != self.magic:
-						self.data = ''
+						self.data = ""
 						self.datasize = 0
 			if len(self.data) >= self.datasize:
 				global onCommandReceived
@@ -52,20 +53,20 @@ class CommandServer:
 		self.factory = ServerFactory()
 		self.factory.protocol = ClientConnection
 		try:
-			os.remove('/tmp/.sock.stalker')
+			os.remove("/tmp/.sock.stalker")
 		except:
 			pass
-		self.port = reactor.listenUNIX('/tmp/.sock.stalker', self.factory)
+		self.port = reactor.listenUNIX("/tmp/.sock.stalker", self.factory)
 
 	def __del__(self):
 		global browserclients
 		for client in browserclients:
 			client.transport.loseConnection()
 
-	def sendCommand(self, cmd, data = ''):
+	def sendCommand(self, cmd, data = ""):
 		global browserclients
 		for client in browserclients:
-			client.transport.write(struct.pack('!III', client.magic, cmd, len(data)))
+			client.transport.write(struct.pack("!III", client.magic, cmd, len(data)))
 			if len(data):
 				client.transport.write(data)
 
