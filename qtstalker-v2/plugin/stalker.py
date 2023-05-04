@@ -200,13 +200,9 @@ class StalkerTVWindow(Screen):
 		self.doExit()
 
 	def onMediaUrlChanged(self, url):
-		self.serviceurl = url
-		urls = url.decode("utf-8", "ignore")
-		print("[Stalker - onMediaUrlChanged] url is: %s" % urls) 
-		ref = eServiceReference(4097, 0, urls)
-		print("[Stalker - onMediaUrlChanged] serviceurl is: %s" % ref) 
+		myreference = eServiceReference(4097, 0, url)
 		global g_session
-		g_session.nav.playService(ref)
+		g_session.nav.playService(myreference)
 		self.mediastate = 0
 		self.sendinfo = 0
 
