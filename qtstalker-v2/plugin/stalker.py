@@ -33,6 +33,8 @@ class StalkerTVWindow(Screen):
 		self.mediatimer = eTimer()
 		self.mediatimer.callback.append(self.mediatimercb)
 		self.mediatimer.start(1000)
+		self.recoverytimer = eTimer()
+		self.recoverytimer.callback.append(self.recoveryCB)
 		self.count = 0
 		self.ppos = 0
 		self.llen = 0
@@ -127,7 +129,7 @@ class StalkerTVWindow(Screen):
 					index += 1
 				json_data["subs"] = json_obj_subs
 		browserinstance.sendCommand(1006, json.dumps(json_data))
-			
+
 	def serviceError(self):
 		service = self.session.nav.getCurrentService()
 		info = service and service.info()
@@ -136,9 +138,18 @@ class StalkerTVWindow(Screen):
 		err = info.getInfoString(iServiceInformation.sUser + 12)
 		print("serviceError: %s" % err)
 		if err == "network: timeout":
-			self.session.nav.stopService()
-			self.onMediaUrlChanged(self.serviceurl)
+			self.mediastate = 1
+			self.serviceStopped()
+			self.recoverytimer.start(1000)
+		if err == "network: error":
+			self.mediastate = 1
+			self.serviceStopped()
+			self.recoverytimer.start(2000)
 		
+	def recoveryCB(self):
+		print("recoveryCB")
+		self.recoverytimer.stop()
+		self.onMediaUrlChanged(self.serviceurl)
 
 	def onSetAudioPid(self, val):
 		track = int(val[0])
@@ -200,9 +211,12 @@ class StalkerTVWindow(Screen):
 		self.doExit()
 
 	def onMediaUrlChanged(self, url):
-		myreference = eServiceReference(4097, 0, url)
+		self.serviceurl = url
+		print("[Stalker - onMediaUrlChanged] url is: %s" % url) 
+		ref = eServiceReference(4097, 0, url)
+		print("[Stalker - onMediaUrlChanged] serviceurl is: %s" % ref) 
 		global g_session
-		g_session.nav.playService(myreference)
+		g_session.nav.playService(ref)
 		self.mediastate = 0
 		self.sendinfo = 0
 
