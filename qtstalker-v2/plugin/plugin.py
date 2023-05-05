@@ -20,7 +20,7 @@ from stalker import StalkerTVWindow
 
 config.plugins.Stalker = ConfigSubsection()
 config.plugins.Stalker.ntpurl = ConfigText(default = "")
-config.plugins.Stalker.stalkermac = ConfigYesNo(default = True)
+config.plugins.Stalker.stalkermac = ConfigYesNo(default = False)
 config.plugins.Stalker.showinextensions = ConfigYesNo(default = True)
 config.plugins.Stalker.showinmenu = ConfigYesNo(default = False)
 config.plugins.Stalker.autostart = ConfigYesNo(default = False)
