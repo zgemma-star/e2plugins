@@ -6,6 +6,7 @@ from Components.VolumeControl import VolumeControl
 from Components.config import config
 from . import datasocket
 import six
+import os
 
 class Browser:
 	def __init__(self):
@@ -37,6 +38,11 @@ class Browser:
 				arg = " v2"
 			container = eConsoleAppContainer()
 			container.execute("export QT_QPA_FB_HIDECURSOR=1 QT_QPA_FONTDIR=/usr/share/fonts QT_QPA_PLATFORM=linuxfb:fb=/dev/fb/0; /usr/bin/stalker" + arg)
+
+			FBmode = '/sys/devices/virtual/graphics/fb0/mode'
+			if os.path.isfile(FBmode):
+				os.system('echo U:1280x720p-0 > /sys/devices/virtual/graphics/fb0/mode')
+
 
 	def stop(self):
 		if self.commandserver:
