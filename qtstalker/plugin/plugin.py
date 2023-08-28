@@ -224,7 +224,7 @@ def Plugins(**kwargs):
 		stalker = "stalker_FHD.png"
 	menus.append(PluginDescriptor(name=_("Stalker Setup"), description=_("Stalker Setup"), where=PluginDescriptor.WHERE_PLUGINMENU, icon=stalker, fnc=setup))
 	if config.plugins.Stalker.showinextensions.value:
-		menus.append(PluginDescriptor(name= _("Stalker"), description = _("Stalker"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, icon="", fnc = main))
+		menus.append(PluginDescriptor(name= _("Stalker"), description = _("Stalker"), where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = main))
 	if config.plugins.Stalker.showinmenu.value:
 		menus.append(PluginDescriptor(name=_("Stalker"), description = _("Stalker"), where = PluginDescriptor.WHERE_MENU, fnc = startMenu))
 	if config.plugins.Stalker.autostart.value:
