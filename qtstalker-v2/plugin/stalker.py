@@ -141,10 +141,12 @@ class StalkerTVWindow(Screen):
 		if err == "network: timeout":
 			self.mediastate = 1
 			self.serviceStopped()
+			self.session.nav.stopService()
 			self.recoverytimer.start(1000)
 		if err == "network: error":
 			self.mediastate = 1
 			self.serviceStopped()
+			self.session.nav.stopService()
 			self.recoverytimer.start(2000)
 		
 	def recoveryCB(self):
